@@ -1,0 +1,107 @@
+[
+  {
+    "transaction_id": 1,
+    "user_id": "user1",
+    "transaction_type": "withdrawal",
+    "amount": "100.00",
+    "timestamp": "2024-04-22 20:07:53"
+  },
+  {
+    "transaction_id": 2,
+    "user_id": "user2",
+    "transaction_type": "deposit",
+    "amount": "500.00",
+    "timestamp": "2024-04-22 20:07:53"
+  },
+  {
+    "transaction_id": 3,
+    "user_id": "user3",
+    "transaction_type": "transfer",
+    "amount": "200.00",
+    "timestamp": "2024-04-22 20:07:53"
+  },
+  {
+    "transaction_id": 4,
+    "user_id": "user1",
+    "transaction_type": "withdrawal",
+    "amount": "100.00",
+    "timestamp": "2024-04-24 11:08:25"
+  },
+  {
+    "transaction_id": 5,
+    "user_id": "user1",
+    "transaction_type": "withdrawal",
+    "amount": "300.00",
+    "timestamp": "2024-04-24 11:22:05"
+  },
+  {
+    "transaction_id": 6,
+    "user_id": "user1",
+    "transaction_type": "deposit",
+    "amount": "800.00",
+    "timestamp": "2024-04-24 11:55:58"
+  },
+  {
+    "transaction_id": 7,
+    "user_id": "user1",
+    "transaction_type": "deposit",
+    "amount": "200.00",
+    "timestamp": "2024-04-24 12:11:48"
+  },
+  {
+    "transaction_id": 8,
+    "user_id": "user1",
+    "transaction_type": "withdrawal",
+    "amount": "300.00",
+    "timestamp": "2024-04-24 18:40:45"
+  },
+  {
+    "transaction_id": 9,
+    "user_id": "user1",
+    "transaction_type": "transfer",
+    "amount": "200.00",
+    "timestamp": "2024-04-24 19:35:26"
+  },
+  {
+    "transaction_id": 10,
+    "user_id": "user1",
+    "transaction_type": "deposit",
+    "amount": "1000.00",
+    "timestamp": "2024-04-25 19:25:20"
+  },
+  {
+    "transaction_id": 11,
+    "user_id": "user1",
+    "transaction_type": "deposit",
+    "amount": "70.00",
+    "timestamp": "2024-04-25 19:32:59"
+  },
+  {
+    "transaction_id": 12,
+    "user_id": "user1",
+    "transaction_type": "withdrawal",
+    "amount": "50.00",
+    "timestamp": "2024-04-25 19:40:07"
+  },
+  {
+    "transaction_id": 13,
+    "user_id": "user1",
+    "transaction_type": "deposit",
+    "amount": "3000.00",
+    "timestamp": "2024-04-28 17:42:45"
+  },
+  {
+    "transaction_id": 14,
+    "user_id": "user1",
+    "transaction_type": "deposit",
+    "amount": "200.00",
+    "timestamp": "2024-05-07 17:51:19"
+  },
+  {
+    "transaction_id": 15,
+    "user_id": "user1",
+    "transaction_type": "withdrawal",
+    "amount": "300.00",
+    "timestamp": "2024-05-07 17:51:40"
+  }
+]

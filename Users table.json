@@ -1,0 +1,20 @@
+[
+  {
+    "user_id": "user1",
+    "pin": "1234",
+    "balance": "2900.00",
+    "viewBalance": null
+  },
+  {
+    "user_id": "user2",
+    "pin": "5678",
+    "balance": "0.00",
+    "viewBalance": null
+  },
+  {
+    "user_id": "user3",
+    "pin": "9876",
+    "balance": "0.00",
+    "viewBalance": null
+  }
+]
