@@ -16,6 +16,7 @@ import java.util.List;
 import java.awt.event.*;
 
 public class ATMGUI<ATMInterface> extends JFrame {
+    protected static final JTextComponent amountField = null;
     private ATM atm;
     private JTextField userIdField;
     private JPasswordField pinField;
@@ -110,76 +111,99 @@ public class ATMGUI<ATMInterface> extends JFrame {
         atmFrame.setLocationRelativeTo(null);
         atmFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
-        JPanel panel = new JPanel(new GridLayout(4, 1));
+        JPanel panel = new JPanel(new BorderLayout());
     
         JLabel userInfoLabel = new JLabel("Welcome, " + userId + "!");
-        panel.add(userInfoLabel);
+        panel.add(userInfoLabel, BorderLayout.NORTH);
     
+        // Create buttons for menu options
         JButton viewTransactionHistoryButton = new JButton("View Transaction History");
+        JButton withdrawButton = new JButton("Withdraw");
+        JButton depositButton = new JButton("Deposit");
+        JButton quitButton = new JButton("Quit");
+    
+        // Assign action listeners to buttons
         viewTransactionHistoryButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                displayTransactionHistory(userId);
+                displayTransactionHistory(userId, null);
             }
         });
-        panel.add(viewTransactionHistoryButton);
     
-        JButton withdrawButton = new JButton("Withdraw");
-        withdrawButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Check if currentUser is not null before proceeding
-                if (currentUser != null) {
-                    double amount = getDoubleInput("Enter the amount to withdraw:");
-                    atm.withdraw(currentUser, amount); // Pass currentUser to the withdraw method
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error: Current user is null.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+        atmFrame.setContentPane(panel);
+        atmFrame.setVisible(true);
+
+    withdrawButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            // Handle withdrawal action
+            if (currentUser != null) {
+                double amount = getDoubleInput("Enter the amount to withdraw:");
+                atm.withdraw(currentUser, amount);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: Current user is null.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        });
-        panel.add(withdrawButton); 
+        }
+    });
     
-        JButton depositButton = new JButton("Deposit");
-        depositButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+    depositButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            // Handle deposit action
+            if (currentUser != null) {
                 double amount = getDoubleInput("Enter the amount to deposit:");
-                atm.deposit(currentUser, amount); // Pass currentUser to the deposit method
+                atm.deposit(currentUser, amount);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error: Current user is null.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        });
-        panel.add(depositButton);
+        }
+    });
     
-        JButton quitButton = new JButton("Quit");
-        quitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Thank you for using the ATM. Goodbye!");
-                atmFrame.dispose();
-            }
-        });
-        panel.add(quitButton);
+    quitButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            // Handle quit action
+            System.out.println("Thank you for using the ATM. Goodbye!");
+            atmFrame.dispose();
+        }
+    });
+
+        // Add buttons to the panel
+        panel.add(viewTransactionHistoryButton, BorderLayout.WEST);
+        panel.add(withdrawButton, BorderLayout.CENTER);
+        panel.add(depositButton, BorderLayout.EAST);
+        panel.add(quitButton, BorderLayout.SOUTH);
     
-        atmFrame.setLayout(new FlowLayout());
-        atmFrame.add(panel);
+        atmFrame.setContentPane(panel);
         atmFrame.setVisible(true);
     }
-    
-            private void displayTransactionHistory(String userId) {
-                try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/atm_database", "root", "B@neliswa1");
-                     PreparedStatement statement = connection.prepareStatement("SELECT * FROM transactions WHERE user_id = ?");
-                ) {
-                    statement.setString(1, userId);
-                    try (ResultSet transactions = statement.executeQuery()) {
-                        while (transactions.next()) {
-                            int transactionId = transactions.getInt("transaction_id");
-                            String type = transactions.getString("transaction_type");
-                            double amount = transactions.getDouble("amount");
-                            System.out.println("Transaction ID: " + transactionId);
-                            System.out.println("Type: " + type);
-                            System.out.println("Amount: " + amount);
-                            System.out.println("-----------------------------");
-                        }
-                    }
-                } catch (SQLException ex) {
-                    System.out.println("Error displaying transaction history: " + ex.getMessage());
+
+
+        
+    private void displayTransactionHistory(String userId, JTextArea transactionHistoryArea) {
+        StringBuilder history = new StringBuilder();
+        // Fetch transaction history from the database and append it to the StringBuilder
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/atm_database", "root", "B@neliswa1");
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM transactions WHERE user_id = ?");
+        ) {
+            statement.setString(1, userId);
+            try (ResultSet transactions = statement.executeQuery()) {
+                while (transactions.next()) {
+                    int transactionId = transactions.getInt("transaction_id");
+                    String type = transactions.getString("transaction_type");
+                    double amount = transactions.getDouble("amount");
+                    history.append("Transaction ID: ").append(transactionId).append("\n");
+                    history.append("Type: ").append(type).append("\n");
+                    history.append("Amount: ").append(amount).append("\n");
+                    history.append("-----------------------------\n");
                 }
             }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error fetching transaction history: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    
+        // Set the transaction history text in the JTextArea
+        transactionHistoryArea.setText(history.toString());
+    }
+    
+    
     
 
     private void displayTransactionHistory(ResultSet transactions2) {
